@@ -1,13 +1,17 @@
 package com.aipms.home.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
 @Data
@@ -34,4 +38,8 @@ public class UserProfile {
 	private String panNumber;
 	private double walletBalance;
 	//private Map secretQuestions;
+	
+	@ManyToMany
+	private List<Portfolio> subscribedPortfolios;
+	
 }

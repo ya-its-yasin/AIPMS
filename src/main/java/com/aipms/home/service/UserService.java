@@ -26,6 +26,4 @@ public interface UserService {
 
 	public UserProfile updateProfile(UserProfile user);
 	
-	
-	
 }

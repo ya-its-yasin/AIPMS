@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 		UserProfile validUser = repo.findByEmailId(user.getEmailId());
 		if(validUser!=null && user.getPassword().equals(validUser.getPassword()))
 			return validUser;
-		return validUser;
+		return user;
 	}
 
 	// validate and make changes - Radhika
