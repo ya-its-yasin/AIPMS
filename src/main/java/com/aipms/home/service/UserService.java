@@ -16,7 +16,7 @@ public interface UserService {
 	
 	public Optional<UserProfile> getProfile(int id);
 
-	public boolean userLogin(UserProfile user);
+	public UserProfile userLogin(UserProfile user);
 
 	public boolean createUser(UserProfile user);
 
@@ -24,7 +24,7 @@ public interface UserService {
 
 	public Optional<UserProfile> resetPassword();
 
-	public Optional<UserProfile> updateProfile();
+	public UserProfile updateProfile(UserProfile user);
 	
 	
 	

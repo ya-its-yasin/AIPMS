@@ -25,11 +25,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean userLogin(UserProfile user) {
+	public UserProfile userLogin(UserProfile user) {
 		UserProfile validUser = repo.findByEmailId(user.getEmailId());
 		if(validUser!=null && user.getPassword().equals(validUser.getPassword()))
-			return true;
-		return false;
+			return validUser;
+		return validUser;
 	}
 
 	// validate and make changes - Radhika
@@ -52,8 +52,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Optional<UserProfile> updateProfile() {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	public UserProfile updateProfile(UserProfile user) {	
+		UserProfile us = getProfile(user.getUserId()).get();
+		us.setAadharNumber(user.getAadharNumber());
+		us.setAddress(user.getAddress());
+		us.setAge(user.getAge());
+		us.setDOB(user.getDOB());
+		us.setGender(user.getGender());
+		us.setNationality(user.getNationality());
+		us.setNomineeName(user.getNomineeName());
+		us.setPanNumber(user.getPanNumber());
+		repo.save(us);
+		return us;
 	}
 }

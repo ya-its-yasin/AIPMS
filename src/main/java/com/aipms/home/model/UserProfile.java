@@ -3,7 +3,10 @@ package com.aipms.home.model;
 import java.util.Date;
 import java.util.Map;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -14,8 +17,10 @@ import lombok.*;
 public class UserProfile {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int userId;
 	private String userName;
+	@Column(unique=true)
 	private String emailId;
 	private long mobileNumber;
 	private String password;
