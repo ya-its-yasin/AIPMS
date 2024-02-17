@@ -1,39 +1,63 @@
 package com.aipms.home.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aipms.home.model.UserInfo;
+import com.aipms.home.model.LoginInfo;
+import com.aipms.home.model.UserProfile;
 import com.aipms.home.service.UserService;
+import com.aipms.home.service.impl.UserServiceImpl;
 
-@RestController("/user")
+@RestController
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
-	UserService service;
+	UserServiceImpl service;
 
-	// author -> Murugapandiyan
+	@GetMapping
+	public String apiCheck()
+	{
+		return "I'm working";
+	}
+	
+	// radika
 	@PostMapping("/signup")
-	public boolean createUser(@RequestBody UserInfo user)
+	public boolean createUser(@RequestBody UserProfile user)
 	{
-		return false;
+		return service.createUser(user);
 	}
 	
-	// author -> Radhika
 	@PostMapping("/login")
-	public boolean userLogin(@RequestBody UserInfo user)
+	public boolean userLogin(@RequestBody UserProfile user)
 	{
-		return false;
+		return service.userLogin(user);
 	}
 	
-	// author -> Yasin
-	@GetMapping("/profile")
-	public UserInfo getProfile(@RequestBody UserInfo user)
+	@GetMapping("/profile/{id}")
+	public Optional<UserProfile> getProfile(@PathVariable int id)
 	{
-		UserInfo result = service.getProfile(user);
-		return result;
+		return service.getProfile(id);
+	}
+	
+	// radhika
+	@GetMapping("/reset-password")
+	public Optional<UserProfile> resetPassword()
+	{
+		return service.resetPassword();
+	}
+	
+	//yasin
+	@GetMapping("/update")
+	public Optional<UserProfile> updateProfile()
+	{
+		return service.updateProfile();
 	}
 }

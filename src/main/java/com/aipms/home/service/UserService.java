@@ -1,18 +1,31 @@
 package com.aipms.home.service;
 
-import org.springframework.stereotype.Service;
 
-import com.aipms.home.model.UserInfo;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.aipms.home.model.LoginInfo;
+import com.aipms.home.model.UserProfile;
+import com.aipms.home.repository.LoginInfoRepository;
 
 @Service
-public class UserService {
+public interface UserService {
+	
+	public Optional<UserProfile> getProfile(int id);
 
-	public UserInfo getProfile(UserInfo user) {
-		
-		
-		return null;
-	}
+	public boolean userLogin(UserProfile user);
 
+	public boolean createUser(UserProfile user);
 
+	public boolean forgetPassword(Map secQues);
+
+	public Optional<UserProfile> resetPassword();
+
+	public Optional<UserProfile> updateProfile();
+	
+	
 	
 }

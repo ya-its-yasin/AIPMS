@@ -1,6 +1,9 @@
 package com.aipms.home.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
@@ -13,13 +16,15 @@ import lombok.ToString;
 @ToString
 @Data
 @Entity
-public class UserInfo {
+public class LoginInfo {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 	private String userName;
 	private long mobileNumber;
-	private String emailId;
-	private String password;
 	
+	@Column(unique=true)
+	private String emailId;
+	private String password;	
 }
