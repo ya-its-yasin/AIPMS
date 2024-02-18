@@ -37,9 +37,6 @@ public class UserProfile {
 	private String aadharNumber;
 	private String panNumber;
 	private double walletBalance;
-	//private Map secretQuestions;
-	
-	@ManyToMany
-	private List<Portfolio> subscribedPortfolios;
+
 	
 }

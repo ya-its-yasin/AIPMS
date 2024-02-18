@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aipms.home.model.Portfolio;
+import com.aipms.home.model.UserGoal;
 import com.aipms.home.service.PortfolioService;
 
 @RestController
@@ -39,6 +40,11 @@ public class PortfolioController {
 		return service.addPortfolio(port); 
 	}
 	
+	@GetMapping("/suggest")
+	public Portfolio suggestPortfolio(@RequestBody Portfolio goal)
+	{
+		return service.suggestPortfolio(goal);
+	}
 	
 	
 }

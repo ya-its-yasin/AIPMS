@@ -26,6 +26,10 @@ public class Portfolio {
 	private double gold;
 	private double deposit;
 
-	@ManyToMany
-	private List<UserProfile> subscribedUsers;
+	private double riskPercent;
+	private double returnsPercent;
+	private double returnsAmount;
+	private double periodYears;
+	private double investmentMoney;
+	
 }

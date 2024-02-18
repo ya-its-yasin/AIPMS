@@ -48,14 +48,12 @@ public class UserController {
 		return service.getProfile(id);
 	}
 	
-	// radhika
 	@GetMapping("/reset-password")
 	public Optional<UserProfile> resetPassword()
 	{
 		return service.resetPassword();
 	}
 	
-	//yasin
 	@PutMapping("/update")
 	public UserProfile updateProfile(@RequestBody UserProfile user)
 	{
