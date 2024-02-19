@@ -21,7 +21,7 @@ import com.aipms.home.service.impl.UserServiceImpl;
 public class UserController {
 	
 	@Autowired
-	UserServiceImpl service;
+	UserService service;
 
 	@GetMapping
 	public String apiCheck()
