@@ -116,16 +116,13 @@ public class MutualFundsServiceImpl implements MutualFundsService{
 					tempMF.setInitialActionDate(tempMF.getLastActionDate());
 					tempMF.setInitialActionAmount(tempMF.getLastActionAmount());
 					
-					tempMF.setCapsCategory(stock.getCapsCategory());
 					tempMF.setLastActionAmount(stock.getLastActionAmount());
 					tempMF.setLastActionDate(stock.getLastActionDate());
 					
-SimpleDateFormat smf = new SimpleDateFormat("yyyy-MM-dd");
 					
 					int interval;
 					interval = (int)daysBetweenDates(tempMF.getInitialActionDate(), tempMF.getLastActionDate());
 					tempMF.setInterval(interval);
-					tempMF.setRiskCategory(stock.getRiskCategory());
 					
 					
 					double expectedReturn = ((tempMF.getLastActionAmount()-tempMF.getInitialActionAmount())/tempMF.getInitialActionAmount())*100;

@@ -41,6 +41,44 @@ public class StockSchedulers {
 	@Value("${mutualfund.last.timestamp}")
 	String lastDate;
 	
+	@Value("${mutualfund.update.timestamp}")
+	String updateDate;
+	
+	
+	@Scheduled(cron="${stock_mutualfund_add_update_cron}")
+	public void updateMutualFund() {
+		System.out.println("Mutual Funds Update Amount Batch Started!!!");
+		List<MutualFunds> mutualFunds = mutualFundsServiceImpl.getAllRecords();
+		List<MutualFunds> mutualFundsList = new ArrayList<>();
+		for(MutualFunds mutualFund:mutualFunds) {
+			String urlString ="https://query1.finance.yahoo.com/v7/finance/download/"+mutualFund.getCompanySymbol()+".NS?period1="+updateDate+"&period2="+updateDate+"&interval=1d&events=history";
+			try {
+				URL url=new URL(urlString);
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("GET");
+				
+				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				String inputLine;
+				StringBuilder response = new StringBuilder();
+				while((inputLine=in.readLine())!=null) {
+					response.append(inputLine).append("\n");
+				}
+				String stockPrice = response.toString().split("\n")[1].split(",")[4];
+//				mutualFund.setInitialActionAmount(mutualFund.getInitialActionAmount());
+//				mutualFund.setInitialActionDate(mutualFund.getLastActionDate());
+				mutualFund.setLastActionAmount(Double.parseDouble(stockPrice));
+				mutualFund.setLastActionDate("2024-02-03");
+				mutualFundsList.add(mutualFund);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		mutualFundsServiceImpl.updateLastInterval(mutualFundsList);
+		System.out.println("Mutual Funds Update Amount Batch Completed!!!");
+	}
+	
+	
 	@Scheduled(cron="${stock_mutualfund_add_last_cron}")
 	public void addLastMutualFund() {
 		System.out.println("Mutual Funds Last Amount Batch Started!!!");
