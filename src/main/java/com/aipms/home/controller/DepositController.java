@@ -20,14 +20,12 @@ public class DepositController {
 	@PostMapping("/submit/fd")
 	public boolean submitFD(@RequestBody FixedDeposit fd)
 	{
-		service.submitFD(fd);
-		return false;
+		return service.submitFD(fd);
 	}
 	
 	@PostMapping("/submit/rd")
 	public boolean submitRD(@RequestBody RecurringDeposit rd)
 	{
-		service.submitRD(rd);
-		return false;
+		return service.submitRD(rd);
 	}
 }
