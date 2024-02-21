@@ -26,5 +26,6 @@ public class LoginInfo {
 	
 	@Column(unique=true)
 	private String emailId;
-	private String password;	
+	private String password;
+	
 }

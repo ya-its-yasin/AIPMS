@@ -20,10 +20,10 @@ public interface UserService {
 
 	public boolean createUser(UserProfile user);
 
-	public boolean forgetPassword(Map secQues);
-
 	public Optional<UserProfile> resetPassword();
 
 	public UserProfile updateProfile(UserProfile user);
+
+	public boolean forgotPassword(UserProfile user);
 	
 }
