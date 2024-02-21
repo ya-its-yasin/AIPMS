@@ -33,8 +33,8 @@ public class MutualFunds {
 	private String lastActionDate;
 	private double lastActionAmount;
 	@Column(name = "intervalTimePeriod")
-	
 	private int interval;
+	private double calculatedAnnualAmount;
 	private double returnsPercentage;
 	private double returnsAnnualAmount;
 	private double allocationPercentageFromMoney;

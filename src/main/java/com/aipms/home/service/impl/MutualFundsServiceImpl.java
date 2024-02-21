@@ -90,12 +90,12 @@ public class MutualFundsServiceImpl implements MutualFundsService{
 						tempMF.setInterval(interval);
 					
 					
-				
 					double expectedReturn = ((tempMF.getLastActionAmount()-tempMF.getInitialActionAmount())/tempMF.getInitialActionAmount())*100;
 					double annualizedReturn = Math.pow((1+(expectedReturn/100)),(365/tempMF.getInterval()));
 					
 					tempMF.setReturnsAnnualAmount(annualizedReturn*tempMF.getInitialActionAmount());
 					tempMF.setReturnsPercentage(annualizedReturn);
+					tempMF.setCalculatedAnnualAmount((tempMF.getLastActionAmount()*tempMF.getAllocationPercentageFromMoney())/100);
 					mutualRepo.save(tempMF);
 				}
 			});
@@ -130,6 +130,7 @@ public class MutualFundsServiceImpl implements MutualFundsService{
 					
 					tempMF.setReturnsAnnualAmount(annualizedReturn*tempMF.getInitialActionAmount());
 					tempMF.setReturnsPercentage(annualizedReturn);
+					tempMF.setCalculatedAnnualAmount((tempMF.getLastActionAmount()*tempMF.getAllocationPercentageFromMoney())/100);
 					
 					mutualRepo.save(tempMF);
 					
