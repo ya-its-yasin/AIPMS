@@ -7,5 +7,5 @@ import com.aipms.home.model.FixedDeposit;
 
 @Repository
 public interface FixedDepositRepository extends JpaRepository<FixedDeposit, Integer>{
-
+	
 }
