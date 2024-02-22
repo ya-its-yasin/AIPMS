@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "a0bfc123-04a2-4b1f-9b97-7e1c4e739674",
+		"name": "GoldInvestmentController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32934423"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8090/gold/get/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/gold/get/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"gold",
+						"get",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8090/gold/buy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/gold/buy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"gold",
+						"buy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8090/gold/getall",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/gold/getall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"gold",
+						"getall"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

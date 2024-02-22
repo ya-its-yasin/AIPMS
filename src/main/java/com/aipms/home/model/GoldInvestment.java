@@ -5,10 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
-
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @NoArgsConstructor
@@ -16,16 +15,19 @@ import lombok.ToString;
 @ToString
 @Data
 @Entity
-public class LoginInfo {
-
+public class GoldInvestment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userId;
-	private String userName;
-	private long mobileNumber;
+	private int gid;
+	private double principle;
+	private double interest;
+	private int years;
+	private double amount;
+	//private double goldpurchased;
+	private double monthlyrate;
+	private double months;
+	private double profit;
 	
-	@Column(unique=true)
-	private String emailId;
-	private String password;
 	
+	private int UserId;
 }

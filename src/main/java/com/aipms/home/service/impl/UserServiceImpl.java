@@ -35,21 +35,24 @@ public class UserServiceImpl implements UserService {
 	// validate and make changes - Radhika
 	@Override
 	public boolean createUser(UserProfile user) {
+		
 		repo.save(user);
+		
 		return true;
 	}
 
 	@Override
-	public boolean forgetPassword(Map secQues) {
+	public boolean forgotPassword(UserProfile user) {
 		// TODO Auto-generated method stub
-		return false;
+		UserProfile validUser1 = repo.findByEmailId(user.getEmailId());
+		if(validUser1!=null && user.getSecQuestion().equals(validUser1.getSecQuestion()) && user.getSecAnswer().equals(validUser1.getSecAnswer()))
+			validUser1.setPassword(validUser1.getPassword());
+		    repo.save(validUser1);
+		return true;	
+		 
 	}
 
-	@Override
-	public Optional<UserProfile> resetPassword() {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+
 
 	@Override
 	public UserProfile updateProfile(UserProfile user) {	
@@ -62,6 +65,8 @@ public class UserServiceImpl implements UserService {
 		us.setNationality(user.getNationality());
 		us.setNomineeName(user.getNomineeName());
 		us.setPanNumber(user.getPanNumber());
+		us.setSecQuestion(user.getSecAnswer());
+		us.setSecAnswer(user.getSecAnswer());
 		repo.save(us);
 		return us;
 	}
