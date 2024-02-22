@@ -35,6 +35,7 @@ public class MutualFunds {
 	@Column(name = "intervalTimePeriod")
 	private int interval;
 	private double calculatedAnnualAmount;
+	private double calculatedAnnualReturnAmount;
 	private double returnsPercentage;
 	private double returnsAnnualAmount;
 	private double allocationPercentageFromMoney;

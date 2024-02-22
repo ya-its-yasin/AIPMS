@@ -47,7 +47,7 @@ public class StockController {
 		mutualF.getRiskCategory().equalsIgnoreCase(filterOptions.getRiskCategory()) &&
 		mutualF.getLastActionAmount()*(mutualF.getAllocationPercentageFromMoney()/100)<=
 		filterOptions.getPaymentAmount()).
-		sorted(Comparator.comparingDouble(MutualFunds::getCalculatedAnnualAmount).reversed()).collect(Collectors.toList());
+		sorted(Comparator.comparingDouble(MutualFunds::getCalculatedAnnualReturnAmount).reversed()).collect(Collectors.toList());
 		
 		return mfLogic.permutatedRecommendation(filteredMutualList,0,0,filterOptions.getPaymentAmount());
 	}

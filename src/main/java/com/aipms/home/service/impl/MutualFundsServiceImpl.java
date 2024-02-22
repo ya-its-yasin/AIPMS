@@ -96,6 +96,7 @@ public class MutualFundsServiceImpl implements MutualFundsService{
 					tempMF.setReturnsAnnualAmount(annualizedReturn*tempMF.getInitialActionAmount());
 					tempMF.setReturnsPercentage(annualizedReturn);
 					tempMF.setCalculatedAnnualAmount((tempMF.getLastActionAmount()*tempMF.getAllocationPercentageFromMoney())/100);
+					tempMF.setCalculatedAnnualReturnAmount((tempMF.getReturnsAnnualAmount()*tempMF.getAllocationPercentageFromMoney())/100);
 					mutualRepo.save(tempMF);
 				}
 			});
@@ -131,6 +132,7 @@ public class MutualFundsServiceImpl implements MutualFundsService{
 					tempMF.setReturnsAnnualAmount(annualizedReturn*tempMF.getInitialActionAmount());
 					tempMF.setReturnsPercentage(annualizedReturn);
 					tempMF.setCalculatedAnnualAmount((tempMF.getLastActionAmount()*tempMF.getAllocationPercentageFromMoney())/100);
+					tempMF.setCalculatedAnnualReturnAmount((tempMF.getReturnsAnnualAmount()*tempMF.getAllocationPercentageFromMoney())/100);
 					
 					mutualRepo.save(tempMF);
 					
