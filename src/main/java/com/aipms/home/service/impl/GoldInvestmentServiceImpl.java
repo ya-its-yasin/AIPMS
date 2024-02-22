@@ -15,24 +15,21 @@ public class GoldInvestmentServiceImpl implements GoldInvestmentService {
 	
 	@Autowired
 	GoldInvestmentRepository goldrepo;
-	
 
 	@Override
 	public Optional<GoldInvestment> getProfile(int gid) {
-		// TODO Auto-generated method stub
 		return goldrepo.findById(gid);
 	}
 
 	@Override
-	public List<GoldInvestment> getAllProfiles() {
-		// TODO Auto-generated method stub
-		return goldrepo.findAll();
+	public boolean buygold(GoldInvestment gold) {
+		return goldrepo.save(gold) != null;
 	}
 
 	@Override
-	public boolean buygold(GoldInvestment gold) {
-		// TODO Auto-generated method stub
-		return goldrepo.save(gold) != null;
+	public List<GoldInvestment> getAllProfiles(int userId) {
+		List<Integer> ids = List.of(userId);
+		return goldrepo.findAllById(ids);
 	}
 	
 

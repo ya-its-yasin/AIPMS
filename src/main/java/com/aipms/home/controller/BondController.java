@@ -1,5 +1,6 @@
 package com.aipms.home.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aipms.home.model.FloatingRateBonds;
 import com.aipms.home.model.SovereignGoldBonds;
-import com.aipms.home.model.UserProfile;
 import com.aipms.home.service.BondService;
 
 @RestController
@@ -48,6 +48,20 @@ public class BondController{
 	public Optional<SovereignGoldBonds> FetchSgb(@PathVariable int id)
 	{
 		return service.FetchSgb(id);
+	
+	}
+	
+	@GetMapping("/frb-all/{userId}")
+	public List<FloatingRateBonds> getFrbList(@PathVariable int userId)
+	{
+		return service.getFrbList(userId);
+	
+     }
+	
+	@GetMapping("/sgb-all/{userId}")
+	public List<SovereignGoldBonds> getSgbList(@PathVariable int userId)
+	{
+		return service.getSgbList(userId);
 	
 	}
 }

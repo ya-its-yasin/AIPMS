@@ -123,10 +123,6 @@ public class StockController {
 		return mfLogic.permutatedRecommendation(filteredMutualList,0,0,filterOptions.getPaymentAmount());
 	}
 	
-	
-		
-	
-
 	@PostMapping("/addcompanies")
 	public String addCompaniesInList(@RequestBody List<StockCompany> stockCompanies) {
 		
@@ -141,7 +137,7 @@ public class StockController {
 		return stockCService.getAllStockCompanies();
 	}
 	
-	@GetMapping("/listcompany/{id}")
+	@GetMapping("/listcompany/{companyId}")
 	public StockCompany listCompanyById(@RequestParam int companyId) {
 		return stockCService.getStockCompanies(companyId);
 	}

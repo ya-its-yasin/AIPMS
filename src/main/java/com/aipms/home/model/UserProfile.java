@@ -1,18 +1,15 @@
 package com.aipms.home.model;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -39,11 +36,6 @@ public class UserProfile {
 	private double walletBalance;
 	private String secQuestion;
 	private String secAnswer;
-	
-
-	
-	
-
 
 	
 }

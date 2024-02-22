@@ -1,15 +1,9 @@
 package com.aipms.home.service.impl;
 
-import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.aipms.home.model.LoginInfo;
 import com.aipms.home.model.UserProfile;
-import com.aipms.home.repository.LoginInfoRepository;
 import com.aipms.home.repository.UserProfileRepository;
 import com.aipms.home.service.UserService;
 
@@ -20,8 +14,8 @@ public class UserServiceImpl implements UserService {
 	UserProfileRepository repo;
 	
 	@Override
-	public Optional<UserProfile> getProfile(int id) {
-		return repo.findById(id);
+	public UserProfile getProfile(int id) {
+		return repo.findById(id).get();
 	}
 
 	@Override
@@ -32,18 +26,18 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
-	// validate and make changes - Radhika
 	@Override
-	public boolean createUser(UserProfile user) {
-		
-		repo.save(user);
-		
+	public boolean createUser(UserProfile user) {	
+		try{
+			repo.save(user);
+		}catch(Exception e) {
+			return false;
+		}
 		return true;
 	}
 
 	@Override
 	public boolean forgotPassword(UserProfile user) {
-		// TODO Auto-generated method stub
 		UserProfile validUser1 = repo.findByEmailId(user.getEmailId());
 		if(validUser1!=null && user.getSecQuestion().equals(validUser1.getSecQuestion()) && user.getSecAnswer().equals(validUser1.getSecAnswer()))
 			validUser1.setPassword(validUser1.getPassword());
@@ -52,11 +46,9 @@ public class UserServiceImpl implements UserService {
 		 
 	}
 
-
-
 	@Override
 	public UserProfile updateProfile(UserProfile user) {	
-		UserProfile us = getProfile(user.getUserId()).get();
+		UserProfile us = getProfile(user.getUserId());
 		us.setAadharNumber(user.getAadharNumber());
 		us.setAddress(user.getAddress());
 		us.setAge(user.getAge());

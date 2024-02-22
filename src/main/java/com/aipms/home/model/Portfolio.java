@@ -1,35 +1,24 @@
 package com.aipms.home.model;
 
+
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Portfolio {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@Column(unique=true)
-	private String name;
-	private double mutualFund;
-	private double bond;
-	private double gold;
-	private double deposit;
-
-	private double riskPercent;
-	private double returnsPercent;
-	private double returnsAmount;
-	private double periodYears;
-	private double investmentMoney;
+	private UserProfile user;
+	private List<FixedDeposit> fixedDeposists;
+	private List<RecurringDeposit> recurringDeposits;
+	private List<GoldInvestment> golds;
+	private List<FloatingRateBonds> floatingRateBonds;
+	private List<SovereignGoldBonds> sovereignGoldBonds;
+	private List<PurchasedMutualFunds> mutualFunds;
 	
 }
