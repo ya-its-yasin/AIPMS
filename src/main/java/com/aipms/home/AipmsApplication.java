@@ -13,6 +13,10 @@ public class AipmsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AipmsApplication.class, args);
 	}
+	@Bean
+	public RestTemplate makeTemplate() {
+		return new RestTemplate();
+	}
 	
 
 }

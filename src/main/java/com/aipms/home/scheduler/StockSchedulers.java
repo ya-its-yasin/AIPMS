@@ -29,6 +29,10 @@ import com.aipms.home.service.impl.StockCompanyServiceImpl;
 
 @Component
 public class StockSchedulers {
+	
+	@Autowired
+	RestTemplate template;
+	
 	@Autowired
 	StockCompanyServiceImpl stockCompanyServiceImpl;
 	
@@ -53,17 +57,18 @@ public class StockSchedulers {
 		for(MutualFunds mutualFund:mutualFunds) {
 			String urlString ="https://query1.finance.yahoo.com/v7/finance/download/"+mutualFund.getCompanySymbol()+".NS?period1="+updateDate+"&period2="+updateDate+"&interval=1d&events=history";
 			try {
-				URL url=new URL(urlString);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestMethod("GET");
-				
-				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				String inputLine;
-				StringBuilder response = new StringBuilder();
-				while((inputLine=in.readLine())!=null) {
-					response.append(inputLine).append("\n");
-				}
-				String stockPrice = response.toString().split("\n")[1].split(",")[4];
+//				URL url=new URL(urlString);
+//				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//				conn.setRequestMethod("GET");
+//				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//				String inputLine;
+//				StringBuilder response = new StringBuilder();
+//				while((inputLine=in.readLine())!=null) {
+//					response.append(inputLine).append("\n");
+//				}
+//				String stockPrice = response.toString().split("\n")[1].split(",")[4];
+				String output = template.getForObject(urlString, String.class);
+				String stockPrice = output.split("\n")[1].split(",")[4];
 //				mutualFund.setInitialActionAmount(mutualFund.getInitialActionAmount());
 //				mutualFund.setInitialActionDate(mutualFund.getLastActionDate());
 				mutualFund.setLastActionAmount(Double.parseDouble(stockPrice));
@@ -87,17 +92,19 @@ public class StockSchedulers {
 		for(MutualFunds mutualFund:mutualFunds) {
 			String urlString ="https://query1.finance.yahoo.com/v7/finance/download/"+mutualFund.getCompanySymbol()+".NS?period1="+lastDate+"&period2="+lastDate+"&interval=1d&events=history";
 			try {
-				URL url=new URL(urlString);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestMethod("GET");
+//				URL url=new URL(urlString);
+//				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//				conn.setRequestMethod("GET");
+//				
+//				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//				String inputLine;
+//				StringBuilder response = new StringBuilder();
+//				while((inputLine=in.readLine())!=null) {
+//					response.append(inputLine).append("\n");
+//				}
 				
-				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				String inputLine;
-				StringBuilder response = new StringBuilder();
-				while((inputLine=in.readLine())!=null) {
-					response.append(inputLine).append("\n");
-				}
-				String stockPrice = response.toString().split("\n")[1].split(",")[4];
+				String output = template.getForObject(urlString, String.class);
+				String stockPrice = output.split("\n")[1].split(",")[4];
 				mutualFund.setLastActionAmount(Double.parseDouble(stockPrice));
 				mutualFund.setLastActionDate("2024-02-01");
 				mutualFundsList.add(mutualFund);
@@ -121,17 +128,18 @@ public class StockSchedulers {
 		for(StockCompany stockCompany:stockCompanies) {
 			String urlString ="https://query1.finance.yahoo.com/v7/finance/download/"+stockCompany.getCompanySymbol()+".NS?period1="+initialDate+"&period2="+initialDate+"&interval=1d&events=history";
 			try {
-				URL url=new URL(urlString);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestMethod("GET");
-				
-				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				String inputLine;
-				StringBuilder response = new StringBuilder();
-				while((inputLine=in.readLine())!=null) {
-					response.append(inputLine).append("\n");
-				}
-				String stockPrice = response.toString().split("\n")[1].split(",")[4];
+//				URL url=new URL(urlString);
+//				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//				conn.setRequestMethod("GET");
+//				
+//				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//				String inputLine;
+//				StringBuilder response = new StringBuilder();
+//				while((inputLine=in.readLine())!=null) {
+//					response.append(inputLine).append("\n");
+//				}
+				String output = template.getForObject(urlString, String.class);
+				String stockPrice = output.split("\n")[1].split(",")[4];
 				MutualFunds mutualFund = new MutualFunds();
 				mutualFund.setInitialActionAmount(Double.parseDouble(stockPrice));
 				mutualFund.setCompanySymbol(stockCompany.getCompanySymbol());
@@ -172,15 +180,16 @@ public class StockSchedulers {
 		String niftyUrl4="http://localhost:8085/apiprovider/stockniftysmall100details";
 		HttpClient httpClient = HttpClients.createDefault();
 		try {
-		HttpGet httpGet = new HttpGet(niftyUrl1);
-		HttpResponse response =httpClient.execute(httpGet);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		StringBuilder result = new StringBuilder();
-		String line;
-		while((line=reader.readLine())!=null) {
-			result.append(line);
-		}
-		JSONObject jsonResponse = new JSONObject(result.toString());
+//		HttpGet httpGet = new HttpGet(niftyUrl1);
+//		HttpResponse response =httpClient.execute(httpGet);
+//		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+//		StringBuilder result = new StringBuilder();
+//		String line;
+//		while((line=reader.readLine())!=null) {
+//			result.append(line);
+//		}
+		String output = template.getForObject(niftyUrl1, String.class);
+		JSONObject jsonResponse = new JSONObject(output.toString());
 		JSONArray dataArray = jsonResponse.getJSONArray("data");
 		
 		for(int i=0;i<dataArray.length();i++) {
@@ -198,15 +207,17 @@ public class StockSchedulers {
 			listOfStockCompanies.add(stC);
 		}
 		
-		httpGet = new HttpGet(niftyUrl2);
-		response =httpClient.execute(httpGet);
-		reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		result = new StringBuilder();
-		line="";
-		while((line=reader.readLine())!=null) {
-			result.append(line);
-		}
-		jsonResponse = new JSONObject(result.toString());
+//		httpGet = new HttpGet(niftyUrl2);
+//		response =httpClient.execute(httpGet);
+//		reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+//		result = new StringBuilder();
+//		line="";
+//		while((line=reader.readLine())!=null) {
+//			result.append(line);
+//		}
+		output = template.getForObject(niftyUrl2, String.class);
+		jsonResponse = new JSONObject(output.toString());
+//		jsonResponse = new JSONObject(result.toString());
 		dataArray = jsonResponse.getJSONArray("data");
 		
 		for(int i=0;i<dataArray.length();i++) {
@@ -224,15 +235,17 @@ public class StockSchedulers {
 			listOfStockCompanies.add(stC);
 		}
 		
-		httpGet = new HttpGet(niftyUrl3);
-		response =httpClient.execute(httpGet);
-		reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		result = new StringBuilder();
-		line="";
-		while((line=reader.readLine())!=null) {
-			result.append(line);
-		}
-		jsonResponse = new JSONObject(result.toString());
+//		httpGet = new HttpGet(niftyUrl3);
+//		response =httpClient.execute(httpGet);
+//		reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+//		result = new StringBuilder();
+//		line="";
+//		while((line=reader.readLine())!=null) {
+//			result.append(line);
+//		}
+//		jsonResponse = new JSONObject(result.toString());
+		output = template.getForObject(niftyUrl3, String.class);
+		jsonResponse = new JSONObject(output.toString());
 		dataArray = jsonResponse.getJSONArray("data");
 		
 		for(int i=0;i<dataArray.length();i++) {
@@ -250,15 +263,18 @@ public class StockSchedulers {
 			listOfStockCompanies.add(stC);
 		}
 		
-		httpGet = new HttpGet(niftyUrl4);
-		response =httpClient.execute(httpGet);
-		reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		result = new StringBuilder();
-		line="";
-		while((line=reader.readLine())!=null) {
-			result.append(line);
-		}
-		jsonResponse = new JSONObject(result.toString());
+//		httpGet = new HttpGet(niftyUrl4);
+//		response =httpClient.execute(httpGet);
+//		reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+//		result = new StringBuilder();
+//		line="";
+//		while((line=reader.readLine())!=null) {
+//			result.append(line);
+//		}
+//		jsonResponse = new JSONObject(result.toString());
+	
+		output = template.getForObject(niftyUrl4, String.class);
+		jsonResponse = new JSONObject(output.toString());
 		dataArray = jsonResponse.getJSONArray("data");
 		
 		for(int i=0;i<dataArray.length();i++) {
