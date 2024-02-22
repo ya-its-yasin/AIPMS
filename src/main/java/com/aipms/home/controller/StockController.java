@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aipms.home.businesslogic.MutualFundLogic;
 import com.aipms.home.model.FilterMutualFundOptions;
 import com.aipms.home.model.MutualFunds;
+import com.aipms.home.model.PurchasedMutualFunds;
 import com.aipms.home.model.StockCompany;
+import com.aipms.home.model.UserProfile;
 import com.aipms.home.service.impl.MutualFundsServiceImpl;
+import com.aipms.home.service.impl.PurchasedMutualFundsServiceImpl;
 import com.aipms.home.service.impl.StockCompanyServiceImpl;
+import com.aipms.home.service.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping("/stocks")
@@ -33,10 +37,77 @@ public class StockController {
 	@Autowired
 	MutualFundsServiceImpl mutualFService;
 	
-	@GetMapping
-	public String apiCheck()
-	{
-		return "I'm working";
+	@Autowired
+	PurchasedMutualFundsServiceImpl pMFServiceImpl;
+	
+	@Autowired
+	UserServiceImpl userServiceImpl;
+	
+	@PostMapping("/purchasemutualfunds")
+	public String purchaseMutualFunds(@RequestBody List<PurchasedMutualFunds> purchasedMutualFunds) {
+		try {
+			List<PurchasedMutualFunds> pmfList = new ArrayList<>();
+			purchasedMutualFunds.stream().forEach(mf->{
+				mf.setActiveStatus("ACTIVE");
+				pmfList.add(mf);
+			});
+			String message = pMFServiceImpl.UpdatePurchasedMutualFundsData(pmfList);
+			if(message.toLowerCase().contains("not"))
+				return "Not Successful";
+			else
+				return "Successful";
+		}
+		catch(Exception e) {
+			return "Not Successful";
+		}
+	}
+	
+	@PostMapping("/getrespectivemutualfunds")
+	public List<List<PurchasedMutualFunds>> getRespectiveMutualFunds(@RequestBody UserProfile userprofile){
+		List<PurchasedMutualFunds> purchaseMutualFundsList = pMFServiceImpl.getAllPurchasedModel(userprofile.getUserId());
+		List<List<PurchasedMutualFunds>> ListofListMF = new ArrayList<>();
+		if(purchaseMutualFundsList==null)
+			return null;
+		String t=null;
+		List<PurchasedMutualFunds> mfList = new ArrayList<>();
+		for(PurchasedMutualFunds pmf:purchaseMutualFundsList) {
+			if(t==null) {
+				t=pmf.getPurchaseId();
+				mfList.add(pmf);
+			}
+			else if(t.equals(pmf.getPurchaseId())) {
+				mfList.add(pmf);
+			}
+			else {
+				ListofListMF.add(mfList);
+				t=pmf.getPurchaseId();
+				mfList = new ArrayList<>();
+				mfList.add(pmf);
+			}
+		}
+		ListofListMF.add(mfList);
+		return ListofListMF;
+		
+		
+	}
+	
+	@PostMapping("/withdrawmutualfunds")
+	public String withdrawMutualFunds(@RequestBody List<PurchasedMutualFunds> purchasedMutualFunds) {
+		try {
+			List<PurchasedMutualFunds> pmfList = new ArrayList<>();
+			purchasedMutualFunds.stream().forEach(mf->{
+				mf.setActiveStatus("INACTIVE");
+				pmfList.add(mf);
+			});
+			String message = pMFServiceImpl.UpdatePurchasedMutualFundsData(pmfList);
+			if(message.toLowerCase().contains("not"))
+				return "Not Successful";
+			else
+				return "Successful";
+		}
+		catch(Exception e) {
+			return "Not Successful";
+		}
 	}
 	
 	@PostMapping("/mutualfunds")
