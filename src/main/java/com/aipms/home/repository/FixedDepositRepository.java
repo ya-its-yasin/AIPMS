@@ -8,5 +8,5 @@ import com.aipms.home.model.FloatingRateBonds;
 
 @Repository
 public interface FixedDepositRepository extends JpaRepository<FixedDeposit, Integer>{
-
+	
 }
