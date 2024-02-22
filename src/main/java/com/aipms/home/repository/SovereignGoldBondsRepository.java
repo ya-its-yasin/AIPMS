@@ -7,13 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.aipms.home.model.FloatingRateBonds;
 import com.aipms.home.model.SovereignGoldBonds;
+import com.aipms.home.model.UserProfile;
 
 @Repository
-public interface FloatingRateBondsRepository extends JpaRepository<FloatingRateBonds, Integer>{
+public interface SovereignGoldBondsRepository extends JpaRepository<SovereignGoldBonds, Integer> {
 
-	Optional<FloatingRateBonds> findById(int id);
+	Optional<SovereignGoldBonds> findById(int id);
 
-	
-} 
-
-
+}

@@ -2,6 +2,8 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="/home/labuser/proj-AIPMS"/>
+			<item value="/home/labuser/proj-AIPMS/API-Provider/APIPROVIDERSTOCK"/>
 			<item value="/home/labuser/proj-AIPMS/AIPMS"/>
 		</list>
 		<list key="projectNameTemplate">

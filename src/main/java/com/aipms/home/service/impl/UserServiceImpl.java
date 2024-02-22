@@ -48,17 +48,11 @@ public class UserServiceImpl implements UserService {
 		if(validUser1!=null && user.getSecQuestion().equals(validUser1.getSecQuestion()) && user.getSecAnswer().equals(validUser1.getSecAnswer()))
 			validUser1.setPassword(validUser1.getPassword());
 		    repo.save(validUser1);
-		    return true;	
+		return true;	
 		 
 	}
 
-	@Override
-	public Optional<UserProfile> resetPassword() {
-		// TODO Auto-generated method stub
 
-		
-		return Optional.empty();
-	}
 
 	@Override
 	public UserProfile updateProfile(UserProfile user) {	

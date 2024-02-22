@@ -20,8 +20,6 @@ public interface UserService {
 
 	public boolean createUser(UserProfile user);
 
-	public Optional<UserProfile> resetPassword();
-
 	public UserProfile updateProfile(UserProfile user);
 
 	public boolean forgotPassword(UserProfile user);

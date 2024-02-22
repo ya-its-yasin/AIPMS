@@ -13,20 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class FloatingRateBonds {
+
+public class SovereignGoldBonds{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int frId;
+	private int gId;
 	private String emailId;
-	private double initialRate;//api
-	private double finalRate;//api
-	private double spread;//api
-	private double principle;//i/p from user
-	private double n;//i/p -->user (no.of.years-->max 7 years)
-	//private double interestAmount;
-	//private double finalreturns;
+	private double iAmount;//(investment)
+	private double gprice;//(current gold price)
+	private double interestRate;
+	private int n;//(no.of.years-->5to 7 years)
 	
 }
-
-
