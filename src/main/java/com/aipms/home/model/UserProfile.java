@@ -37,6 +37,13 @@ public class UserProfile {
 	private String aadharNumber;
 	private String panNumber;
 	private double walletBalance;
+	private String secQuestion;
+	private String secAnswer;
+	
+
+	
+	
+
 
 	
 }

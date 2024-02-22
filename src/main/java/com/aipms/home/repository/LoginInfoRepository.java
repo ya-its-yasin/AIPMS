@@ -9,4 +9,6 @@ import com.aipms.home.model.LoginInfo;
 public interface LoginInfoRepository extends JpaRepository<LoginInfo, Integer> {
 
 	LoginInfo findByEmailId(String email);
+	
+	
 }
