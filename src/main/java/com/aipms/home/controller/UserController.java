@@ -1,6 +1,10 @@
 package com.aipms.home.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,39 +23,55 @@ public class UserController {
 	@Autowired
 	UserService service;
 
+	Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	@GetMapping
 	public String apiCheck()
 	{
+		logger.info("tested check endpoint");
 		return "I'm working";
 	}
 	
 	@PostMapping("/signup")
-	public boolean createUser(@RequestBody UserProfile user)
+	public ResponseEntity<?> createUser(@RequestBody UserProfile user)
 	{
 		return service.createUser(user);
 	}
 	
 	@PostMapping("/login")
-	public UserProfile userLogin(@RequestBody UserProfile user)
+	public ResponseEntity<?> userLogin(@RequestBody UserProfile user)
 	{
 		return service.userLogin(user);
 	}
 	
 	@GetMapping("/profile/{id}")
-	public UserProfile getProfile(@PathVariable int id)
+	public ResponseEntity<?> getProfile(@PathVariable int id)
 	{
-		return service.getProfile(id);
+		Object res = service.getProfile(id);
+		if(res instanceof UserProfile)
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping("/forgotpassword")
-	public boolean forgotPassword(@RequestBody UserProfile user)
+	@PutMapping("/forgotPassword")
+	public boolean forgotPassword(@RequestBody String email)
 	{
-		return service.forgotPassword(user);
+		return service.forgotPassword(email);
+	}
+	
+	@PutMapping("/updatePassword")
+	public ResponseEntity<?> updatePassword(@RequestBody UserProfile user)
+	{
+		if(service.updatePassword(user)) {
+			return new ResponseEntity<>("Password successfully changed", HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("Password change attempt failed, please try again by generating new OTP", HttpStatus.EXPECTATION_FAILED);
+		}
 	}
 	
 	@PutMapping("/update")
-	public UserProfile updateProfile(@RequestBody UserProfile user)
+	public ResponseEntity<?> updateProfile(@RequestBody UserProfile user)
 	{
-		return service.updateProfile(user);
+		return new ResponseEntity<>(service.updateProfile(user), HttpStatus.OK);
 	}
 }
