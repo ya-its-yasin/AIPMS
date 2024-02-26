@@ -13,7 +13,9 @@ public class MutualFundLogic {
 	static List<List<MutualFunds>> mutualFundsListofList = new ArrayList<>();
 	public List<List<MutualFunds>>  permutatedRecommendation(List<MutualFunds> filteredMutualList,int count, double tAmount,double paymentAmount) {
 		permutatedRecommendation1(filteredMutualList,0,0,paymentAmount);
-		return mutualFundsListofList;
+		List<List<MutualFunds>> mutualFundsListofList1 = mutualFundsListofList;
+		mutualFundsListofList = new ArrayList<>();
+		return mutualFundsListofList1;
 		
 	}
 	public  static void permutatedRecommendation1(List<MutualFunds> filteredMutualList,int count, double tAmount,double paymentAmount) {
