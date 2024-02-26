@@ -9,7 +9,7 @@ import com.aipms.home.model.UserProfile;
 @Service
 public interface UserService {
 	
-	public Object getProfile(int id);
+	public ResponseEntity<?> getProfile(int id);
 
 	public ResponseEntity<?> userLogin(UserProfile user);
 

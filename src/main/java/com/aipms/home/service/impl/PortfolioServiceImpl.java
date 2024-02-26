@@ -1,7 +1,11 @@
 package com.aipms.home.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.aipms.home.model.Portfolio;
 import com.aipms.home.model.UserProfile;
@@ -30,11 +34,17 @@ public class PortfolioServiceImpl implements PortfolioService{
 	@Autowired
 	PurchasedMutualFundsService pmfService;
 	
+	@Autowired
+	RestTemplate restTemplate;
+	
 	@Override
 	public Portfolio getPortfolio(int id) {
 		
 		Portfolio userPortfolio = new Portfolio();
-		userPortfolio.setUser((UserProfile)userService.getProfile(id));
+		ResponseEntity<?> response = restTemplate.getForEntity(
+				"http://localhost:8090/user/profile/"+id, UserProfile.class);
+		UserProfile user = (UserProfile) response.getBody();
+		userPortfolio.setUser(user);
 		userPortfolio.setFixedDeposists(depositService.getAllFDsOfUser(id));
 		userPortfolio.setRecurringDeposits(depositService.getAllRDsOfUser(id));
 		userPortfolio.setGolds(goldService.getAllProfiles(id));

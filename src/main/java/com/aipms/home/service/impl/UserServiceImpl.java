@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	@Override
-	public Object getProfile(int id) {
+	public ResponseEntity<?> getProfile(int id) {
 		Optional<UserProfile> user = repo.findById(id);
 		if(user.isEmpty()) {
 			return new ResponseEntity<>("User does not exist",HttpStatus.BAD_REQUEST );

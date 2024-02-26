@@ -47,10 +47,7 @@ public class UserController {
 	@GetMapping("/profile/{id}")
 	public ResponseEntity<?> getProfile(@PathVariable int id)
 	{
-		Object res = service.getProfile(id);
-		if(res instanceof UserProfile)
-			return new ResponseEntity<>(res, HttpStatus.OK);
-		return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		return service.getProfile(id);
 	}
 	
 	@PutMapping("/forgotPassword")
