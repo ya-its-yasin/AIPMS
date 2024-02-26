@@ -49,6 +49,7 @@ public class StockController {
 			List<PurchasedMutualFunds> pmfList = new ArrayList<>();
 			purchasedMutualFunds.stream().forEach(mf->{
 				mf.setActiveStatus("ACTIVE");
+				mf.setCurrentReturnAmount(mf.getBoughtAmount())	;
 				pmfList.add(mf);
 			});
 			String message = pMFServiceImpl.UpdatePurchasedMutualFundsData(pmfList);
