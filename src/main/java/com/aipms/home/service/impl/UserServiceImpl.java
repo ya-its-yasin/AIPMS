@@ -60,12 +60,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean forgotPassword(String email) {	
+	public boolean forgotPassword(String emailId) {	
 		Random rnd = new Random();
 	    int number = rnd.nextInt(999999);
 	    int otp = Integer.parseInt(String.format("%06d", number));
-	    repo.findByEmailId(email).setTempOTP(otp);	   
-		return emailService.sendSimpleMail(otp, email);
+	    UserProfile exist = repo.findByEmailId(emailId);	
+	    exist.setTempOTP(otp);
+	    repo.save(exist);
+		return emailService.sendSimpleMail(otp, emailId);
 	}
 
 	@Override
@@ -89,6 +91,7 @@ public class UserServiceImpl implements UserService {
 		if(user.getTempOTP() == validUser.getTempOTP() ) {
 			validUser.setPassword(user.getPassword());
 			validUser.setTempOTP(0);
+			repo.save(validUser);
 			logger.warn("Password has been changed by the user -> " + user.getEmailId());
 			return true;
 		}

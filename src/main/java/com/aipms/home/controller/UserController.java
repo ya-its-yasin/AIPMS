@@ -54,9 +54,10 @@ public class UserController {
 	}
 	
 	@PutMapping("/forgotPassword")
-	public boolean forgotPassword(@RequestBody String email)
+	public ResponseEntity<?> forgotPassword(@RequestBody UserProfile user)
 	{
-		return service.forgotPassword(email);
+		service.forgotPassword(user.getEmailId());
+		return new ResponseEntity<>("OTP to change password has been sent through mail", HttpStatus.OK);
 	}
 	
 	@PutMapping("/updatePassword")

@@ -17,7 +17,7 @@ public interface UserService {
 
 	public UserProfile updateProfile(UserProfile user);
 
-	public boolean forgotPassword(String email);
+	public boolean forgotPassword(String emailId);
 
 	public boolean updatePassword(UserProfile user);
 	
