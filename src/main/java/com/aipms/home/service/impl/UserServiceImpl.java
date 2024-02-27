@@ -81,6 +81,7 @@ public class UserServiceImpl implements UserService {
 		us.setNationality(user.getNationality());
 		us.setNomineeName(user.getNomineeName());
 		us.setPanNumber(user.getPanNumber());
+		us.setWalletBalance(user.getWalletBalance());
 		repo.save(us);
 		return us;
 	}
