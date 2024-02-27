@@ -20,10 +20,10 @@ import com.aipms.home.model.MutualFunds;
 import com.aipms.home.model.PurchasedMutualFunds;
 import com.aipms.home.model.StockCompany;
 import com.aipms.home.model.UserProfile;
-import com.aipms.home.service.impl.MutualFundsServiceImpl;
-import com.aipms.home.service.impl.PurchasedMutualFundsServiceImpl;
-import com.aipms.home.service.impl.StockCompanyServiceImpl;
-import com.aipms.home.service.impl.UserServiceImpl;
+import com.aipms.home.service.MutualFundsService;
+import com.aipms.home.service.PurchasedMutualFundsService;
+import com.aipms.home.service.StockCompanyService;
+import com.aipms.home.service.UserService;
 
 @RestController
 @RequestMapping("/stocks")
@@ -31,19 +31,19 @@ import com.aipms.home.service.impl.UserServiceImpl;
 public class StockController {
 	
 	@Autowired
-	StockCompanyServiceImpl stockCService;
+	StockCompanyService stockCService;
 	
 	@Autowired
 	MutualFundLogic mfLogic;
 	
 	@Autowired
-	MutualFundsServiceImpl mutualFService;
+	MutualFundsService mutualFService;
 	
 	@Autowired
-	PurchasedMutualFundsServiceImpl pMFServiceImpl;
+	PurchasedMutualFundsService pMFService;
 	
 	@Autowired
-	UserServiceImpl userServiceImpl;
+	UserService userService;
 	
 	@PostMapping("/purchasemutualfunds")
 	public String purchaseMutualFunds(@RequestBody List<PurchasedMutualFunds> purchasedMutualFunds) {
@@ -54,7 +54,7 @@ public class StockController {
 				mf.setCurrentReturnAmount(mf.getBoughtAmount())	;
 				pmfList.add(mf);
 			});
-			String message = pMFServiceImpl.UpdatePurchasedMutualFundsData(pmfList);
+			String message = pMFService.UpdatePurchasedMutualFundsData(pmfList);
 			if(message.toLowerCase().contains("not"))
 				return "Not Successful";
 			else
@@ -67,7 +67,7 @@ public class StockController {
 	
 	@PostMapping("/getrespectivemutualfunds")
 	public List<List<PurchasedMutualFunds>> getRespectiveMutualFunds(@RequestBody UserProfile userprofile){
-		List<PurchasedMutualFunds> purchaseMutualFundsList = pMFServiceImpl.getAllPurchasedModel(userprofile.getUserId());
+		List<PurchasedMutualFunds> purchaseMutualFundsList = pMFService.getAllPurchasedModel(userprofile.getUserId());
 		List<List<PurchasedMutualFunds>> ListofListMF = new ArrayList<>();
 		if(purchaseMutualFundsList==null)
 			return null;
@@ -102,7 +102,7 @@ public class StockController {
 				mf.setActiveStatus("INACTIVE");
 				pmfList.add(mf);
 			});
-			String message = pMFServiceImpl.UpdatePurchasedMutualFundsData(pmfList);
+			String message = pMFService.UpdatePurchasedMutualFundsData(pmfList);
 			if(message.toLowerCase().contains("not"))
 				return "Not Successful";
 			else

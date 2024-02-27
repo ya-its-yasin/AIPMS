@@ -13,9 +13,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.aipms.home.model.MutualFunds;
 import com.aipms.home.model.StockCompany;
-import com.aipms.home.service.impl.MutualFundsServiceImpl;
-import com.aipms.home.service.impl.PurchasedMutualFundsServiceImpl;
-import com.aipms.home.service.impl.StockCompanyServiceImpl;
+import com.aipms.home.service.MutualFundsService;
+import com.aipms.home.service.PurchasedMutualFundsService;
+import com.aipms.home.service.StockCompanyService;
 
 @Component
 public class StockSchedulers {
@@ -24,13 +24,13 @@ public class StockSchedulers {
 	RestTemplate template;
 	
 	@Autowired
-	PurchasedMutualFundsServiceImpl purchasedMFServiceImpl;
+	PurchasedMutualFundsService purchasedMFService;
 	
 	@Autowired
-	StockCompanyServiceImpl stockCompanyServiceImpl;
+	StockCompanyService stockCompanyService;
 	
 	@Autowired
-	MutualFundsServiceImpl mutualFundsServiceImpl;
+	MutualFundsService mutualFundsService;
 	
 	@Value("${mutualfund.initial.timestamp}")
 	String initialDate;
@@ -45,7 +45,7 @@ public class StockSchedulers {
 	@Scheduled(cron="${stock_mutualfund_add_update_cron}")
 	public void updateMutualFund() {
 		System.out.println("Mutual Funds Update Amount Batch Started!!!");
-		List<MutualFunds> mutualFunds = mutualFundsServiceImpl.getAllRecords();
+		List<MutualFunds> mutualFunds = mutualFundsService.getAllRecords();
 		List<MutualFunds> mutualFundsList = new ArrayList<>();
 		for(MutualFunds mutualFund:mutualFunds) {
 			String urlString ="https://query1.finance.yahoo.com/v7/finance/download/"+mutualFund.getCompanySymbol()+".NS?period1="+updateDate+"&period2="+updateDate+"&interval=1d&events=history";
@@ -68,13 +68,13 @@ public class StockSchedulers {
 				mutualFund.setLastActionDate("2024-02-03");
 				mutualFundsList.add(mutualFund);
 				
-				purchasedMFServiceImpl.updateReturnAmount((mutualFund.getInitialActionAmount() * mutualFund.getAllocationPercentageFromMoney())/100,mutualFund.getCompanySymbol());
+				purchasedMFService.updateReturnAmount((mutualFund.getInitialActionAmount() * mutualFund.getAllocationPercentageFromMoney())/100,mutualFund.getCompanySymbol());
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		mutualFundsServiceImpl.updateLastInterval(mutualFundsList);
+		mutualFundsService.updateLastInterval(mutualFundsList);
 		
 		System.out.println("Mutual Funds Update Amount Batch Completed!!!");
 	}
@@ -83,7 +83,7 @@ public class StockSchedulers {
 	@Scheduled(cron="${stock_mutualfund_add_last_cron}")
 	public void addLastMutualFund() {
 		System.out.println("Mutual Funds Last Amount Batch Started!!!");
-		List<MutualFunds> mutualFunds = mutualFundsServiceImpl.getAllRecords();
+		List<MutualFunds> mutualFunds = mutualFundsService.getAllRecords();
 		List<MutualFunds> mutualFundsList = new ArrayList<>();
 		for(MutualFunds mutualFund:mutualFunds) {
 			String urlString ="https://query1.finance.yahoo.com/v7/finance/download/"+mutualFund.getCompanySymbol()+".NS?period1="+lastDate+"&period2="+lastDate+"&interval=1d&events=history";
@@ -103,14 +103,14 @@ public class StockSchedulers {
 				String stockPrice = output.split("\n")[1].split(",")[4];
 				mutualFund.setLastActionAmount(Double.parseDouble(stockPrice));
 				mutualFund.setLastActionDate("2024-02-01");
-				purchasedMFServiceImpl.updateReturnAmount((mutualFund.getInitialActionAmount() * mutualFund.getAllocationPercentageFromMoney())/100,mutualFund.getCompanySymbol());
+				purchasedMFService.updateReturnAmount((mutualFund.getInitialActionAmount() * mutualFund.getAllocationPercentageFromMoney())/100,mutualFund.getCompanySymbol());
 				mutualFundsList.add(mutualFund);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		mutualFundsServiceImpl.addLastInterval(mutualFundsList);
+		mutualFundsService.addLastInterval(mutualFundsList);
 		System.out.println("Mutual Funds Last Amount Batch Completed!!!");
 		
 		
@@ -118,9 +118,9 @@ public class StockSchedulers {
 	
 	@Scheduled(cron="${stock_mutualfund_add_inital_cron}")
 	public void addInitialMutualFund() {
-		mutualFundsServiceImpl.deleteAllRecords();
+		mutualFundsService.deleteAllRecords();
 		System.out.println("Mutual Funds Initial Amount Batch Started!!!");
-		List<StockCompany> stockCompanies = stockCompanyServiceImpl.getAllStockCompanies();
+		List<StockCompany> stockCompanies = stockCompanyService.getAllStockCompanies();
 		List<MutualFunds> mutualFundsList = new ArrayList<>();
 		for(StockCompany stockCompany:stockCompanies) {
 			String urlString ="https://query1.finance.yahoo.com/v7/finance/download/"+stockCompany.getCompanySymbol()+".NS?period1="+initialDate+"&period2="+initialDate+"&interval=1d&events=history";
@@ -160,7 +160,7 @@ public class StockSchedulers {
 				e.printStackTrace();
 			}
 		}
-		mutualFundsServiceImpl.addInitialInterval(mutualFundsList);
+		mutualFundsService.addInitialInterval(mutualFundsList);
 		System.out.println("Mutual Funds Initial Amount Batch Completed!!!");
 		
 		
@@ -169,7 +169,7 @@ public class StockSchedulers {
 	@Scheduled(cron="${stock_company_cron}")
 	public void scheduledAddCompanies() {
 		System.out.println("Stock Company Batch Started...");
-		stockCompanyServiceImpl.deleteAllStockCompanies();
+		stockCompanyService.deleteAllStockCompanies();
 		List<StockCompany> listOfStockCompanies = new ArrayList<>();
 		String niftyUrl1="http://localhost:8085/apiprovider/stocknifty50details";
 		String niftyUrl2="http://localhost:8085/apiprovider/stockniftynext50details";
@@ -292,7 +292,7 @@ public class StockSchedulers {
 		catch(Exception e) {
 			
 		}
-		stockCompanyServiceImpl.addListOfStockCompanies(listOfStockCompanies);
+		stockCompanyService.addListOfStockCompanies(listOfStockCompanies);
 		System.out.println("Stock Company Batch Completed...");
 	}
 
