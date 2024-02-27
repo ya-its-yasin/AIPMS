@@ -1,27 +1,24 @@
 package com.aipms.home.service;
 
 
-import java.util.Map;
-import java.util.Optional;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import com.aipms.home.model.LoginInfo;
 import com.aipms.home.model.UserProfile;
-import com.aipms.home.repository.LoginInfoRepository;
 
 @Service
 public interface UserService {
 	
-	public Optional<UserProfile> getProfile(int id);
+	public ResponseEntity<?> getProfile(int id);
 
-	public UserProfile userLogin(UserProfile user);
+	public ResponseEntity<?> userLogin(UserProfile user);
 
-	public boolean createUser(UserProfile user);
+	public ResponseEntity<?> createUser(UserProfile user);
 
 	public UserProfile updateProfile(UserProfile user);
 
-	public boolean forgotPassword(UserProfile user);
+	public boolean forgotPassword(String emailId);
+
+	public boolean updatePassword(UserProfile user);
 	
 }

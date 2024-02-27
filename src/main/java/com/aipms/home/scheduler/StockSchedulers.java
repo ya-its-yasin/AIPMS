@@ -1,19 +1,8 @@
 package com.aipms.home.scheduler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -178,7 +167,7 @@ public class StockSchedulers {
 		String niftyUrl2="http://localhost:8085/apiprovider/stockniftynext50details";
 		String niftyUrl3="http://localhost:8085/apiprovider/stockniftymid100details";
 		String niftyUrl4="http://localhost:8085/apiprovider/stockniftysmall100details";
-		HttpClient httpClient = HttpClients.createDefault();
+//		HttpClient httpClient = HttpClients.createDefault();
 		try {
 //		HttpGet httpGet = new HttpGet(niftyUrl1);
 //		HttpResponse response =httpClient.execute(httpGet);

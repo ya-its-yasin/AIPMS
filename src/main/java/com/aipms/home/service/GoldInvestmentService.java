@@ -12,7 +12,7 @@ public interface GoldInvestmentService {
 
 	Optional<GoldInvestment> getProfile(int gid);
 
-	List<GoldInvestment> getAllProfiles();
+	List<GoldInvestment> getAllProfiles(int userId);
 
 	boolean buygold(GoldInvestment gold);
 

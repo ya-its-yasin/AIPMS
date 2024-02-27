@@ -1,5 +1,7 @@
 package com.aipms.home.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,18 @@ public class DepositServiceImpl implements DepositService {
 	@Override
 	public boolean submitRD(RecurringDeposit rd) {
 		return rdRepo.save(rd) != null;
+	}
+
+	@Override
+	public List<FixedDeposit> getAllFDsOfUser(int userId) {
+		List<Integer> ids = List.of(userId);
+		return fdRepo.findAllById(ids);
+	}
+
+	@Override
+	public List<RecurringDeposit> getAllRDsOfUser(int userId) {
+		List<Integer> ids = List.of(userId);
+		return rdRepo.findAllById(ids);
 	}
 
 }
