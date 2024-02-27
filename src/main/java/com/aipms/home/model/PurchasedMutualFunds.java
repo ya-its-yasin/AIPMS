@@ -23,5 +23,5 @@ public class PurchasedMutualFunds {
 	private double boughtPercentage;
 	private double boughtAmount;
 	private String activeStatus;
-	private String currentReturnAmount;
+	private double currentReturnAmount;
 }

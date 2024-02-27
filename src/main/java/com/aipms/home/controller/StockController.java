@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ import com.aipms.home.service.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping("/stocks")
+@CrossOrigin("http://localhost:4200/")
 public class StockController {
 	
 	@Autowired
@@ -49,13 +51,14 @@ public class StockController {
 			List<PurchasedMutualFunds> pmfList = new ArrayList<>();
 			purchasedMutualFunds.stream().forEach(mf->{
 				mf.setActiveStatus("ACTIVE");
+				mf.setCurrentReturnAmount(mf.getBoughtAmount())	;
 				pmfList.add(mf);
 			});
 			String message = pMFServiceImpl.UpdatePurchasedMutualFundsData(pmfList);
 			if(message.toLowerCase().contains("not"))
 				return "Not Successful";
 			else
-				return "Successful";
+				return "Purchase Successful";
 		}
 		catch(Exception e) {
 			return "Not Successful";
@@ -103,7 +106,7 @@ public class StockController {
 			if(message.toLowerCase().contains("not"))
 				return "Not Successful";
 			else
-				return "Successful";
+				return "Withdrawn Successful";
 		}
 		catch(Exception e) {
 			return "Not Successful";
