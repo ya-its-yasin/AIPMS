@@ -32,7 +32,7 @@ public class FixedDeposit {
 	private Date StartDate;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date EndDate;
-	
+	private double monthlyInterest;
 	@ManyToOne
 	private UserProfile fdHolder;
 	

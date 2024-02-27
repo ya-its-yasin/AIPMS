@@ -29,11 +29,11 @@ public class RecurringDeposit {
 	private double interestAmount;
 	private double maturityAmount;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-	private Date StartDate;
+	private Date startDate;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-	private Date EndDate;
+	private Date endDate;
 	
 	@ManyToOne
-	private UserProfile fdHolder;
+	private UserProfile rdHolder;
 	
 }
