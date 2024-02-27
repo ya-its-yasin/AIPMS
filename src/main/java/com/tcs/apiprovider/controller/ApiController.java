@@ -1,12 +1,28 @@
 package com.tcs.apiprovider.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tcs.apiprovider.model.FloatingRateBonds;
+
 @RestController
 @RequestMapping("/apiprovider")
 public class ApiController {
+	
+	@Autowired
+	FloatingRateBonds fr;
+	@GetMapping("/floatingratebonds")
+	public FloatingRateBonds getValues() {
+		
+	fr.setFinalRate(7.7);
+	fr.setInitialRate(6.8);
+	fr.setSpread(3.5);
+	
+	return fr;
+		
+	}
 	@GetMapping("/stockniftysmall100details")
 	public String getSmall100Details() {
 		return "{\n"
