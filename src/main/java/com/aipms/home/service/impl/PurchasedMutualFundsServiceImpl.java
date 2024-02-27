@@ -34,5 +34,15 @@ public class PurchasedMutualFundsServiceImpl implements PurchasedMutualFundsServ
 			return null;
 		}
 	}
+	
+	@Override
+	public int updateReturnAmount(double returnAmount, String companySymbol) {
+		try {
+			return pMFRepo.updateReturnAmount(returnAmount, companySymbol, "ACTIVE");
+		}
+		catch(Exception e) {
+			return 0;
+		}
+	}
 
 }

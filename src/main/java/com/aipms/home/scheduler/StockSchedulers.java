@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import com.aipms.home.model.MutualFunds;
 import com.aipms.home.model.StockCompany;
 import com.aipms.home.service.impl.MutualFundsServiceImpl;
+import com.aipms.home.service.impl.PurchasedMutualFundsServiceImpl;
 import com.aipms.home.service.impl.StockCompanyServiceImpl;
 
 @Component
@@ -21,6 +22,9 @@ public class StockSchedulers {
 	
 	@Autowired
 	RestTemplate template;
+	
+	@Autowired
+	PurchasedMutualFundsServiceImpl purchasedMFServiceImpl;
 	
 	@Autowired
 	StockCompanyServiceImpl stockCompanyServiceImpl;
@@ -64,11 +68,14 @@ public class StockSchedulers {
 				mutualFund.setLastActionDate("2024-02-03");
 				mutualFundsList.add(mutualFund);
 				
+				purchasedMFServiceImpl.updateReturnAmount((mutualFund.getInitialActionAmount() * mutualFund.getAllocationPercentageFromMoney())/100,mutualFund.getCompanySymbol());
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		mutualFundsServiceImpl.updateLastInterval(mutualFundsList);
+		
 		System.out.println("Mutual Funds Update Amount Batch Completed!!!");
 	}
 	
@@ -96,6 +103,7 @@ public class StockSchedulers {
 				String stockPrice = output.split("\n")[1].split(",")[4];
 				mutualFund.setLastActionAmount(Double.parseDouble(stockPrice));
 				mutualFund.setLastActionDate("2024-02-01");
+				purchasedMFServiceImpl.updateReturnAmount((mutualFund.getInitialActionAmount() * mutualFund.getAllocationPercentageFromMoney())/100,mutualFund.getCompanySymbol());
 				mutualFundsList.add(mutualFund);
 				
 			} catch (Exception e) {

@@ -13,4 +13,6 @@ public interface PurchasedMutualFundsService {
 
 	List<PurchasedMutualFunds> getAllPurchasedModel(int userId);
 
+	int updateReturnAmount(double returnAmount, String companySymbol);
+
 }
