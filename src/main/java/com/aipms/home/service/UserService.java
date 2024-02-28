@@ -20,5 +20,9 @@ public interface UserService {
 	public boolean forgotPassword(String emailId);
 
 	public boolean updatePassword(UserProfile user);
+
+	int updateDebitWalletAmount(double amount, int id);
+
+	int updateCreditWalletAmount(double amount, int id);
 	
 }
