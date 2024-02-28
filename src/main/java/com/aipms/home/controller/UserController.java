@@ -55,17 +55,23 @@ public class UserController {
 	@PutMapping("/forgotPassword")
 	public ResponseEntity<?> forgotPassword(@RequestBody UserProfile user)
 	{
-		service.forgotPassword(user.getEmailId());
-		return new ResponseEntity<>("OTP to change password has been sent through mail", HttpStatus.OK);
+		if(service.forgotPassword(user.getEmailId())) {
+			logger.info("mail sent");
+			return new ResponseEntity<>(" { \"body\" : \"OTP to change password has been sent through mail\"} ", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(" { \"body\" : \"Something went wrong please try again\"} ", HttpStatus.SERVICE_UNAVAILABLE);
+		}
+		
 	}
 	
 	@PutMapping("/updatePassword")
 	public ResponseEntity<?> updatePassword(@RequestBody UserProfile user)
 	{
 		if(service.updatePassword(user)) {
-			return new ResponseEntity<>("Password successfully changed", HttpStatus.OK);
+			return new ResponseEntity<>(" { \"body\" : \"Password successfully changed\"} ", HttpStatus.OK);
 		}else {
-			return new ResponseEntity<>("Password change attempt failed, please try again by generating new OTP", HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(" { \"body\" : \"Password change attempt failed, please try again by generating new OTP\"} ", HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 	

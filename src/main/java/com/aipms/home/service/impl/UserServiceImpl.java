@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 	public ResponseEntity<?> getProfile(int id) {
 		Optional<UserProfile> user = repo.findById(id);
 		if(user.isEmpty()) {
-			return new ResponseEntity<>("User does not exist",HttpStatus.BAD_REQUEST );
+			return new ResponseEntity<>("{ \"body\" : \"User does not exist\" }",HttpStatus.BAD_REQUEST );
 		}else {
 			return new ResponseEntity<>(user,HttpStatus.OK);
 		}
@@ -47,16 +47,16 @@ public class UserServiceImpl implements UserService {
 		UserProfile validUser = repo.findByEmailId(user.getEmailId());
 		if(validUser!=null && user.getPassword().equals(validUser.getPassword()))
 			return new ResponseEntity<>(validUser,HttpStatus.OK);
-		return new ResponseEntity<>("Email or password is incorrect", HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<>("{ \"body\" : \"Email or password is incorrect\"}", HttpStatus.UNAUTHORIZED);
 	}
 	
 	@Override
 	public ResponseEntity<?> createUser(UserProfile user) {	
 		if(repo.findByEmailId(user.getEmailId()) != null) {
-			return new ResponseEntity<>("Email ID already exist",HttpStatus.BAD_REQUEST );
+			return new ResponseEntity<>("{ \"body\" : \"Email ID already exist\"}",HttpStatus.BAD_REQUEST );
 		}
 		repo.save(user);
-		return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+		return new ResponseEntity<>("{ \"body\" : \"User registered successfully\"}", HttpStatus.OK);
 	}
 
 	@Override
