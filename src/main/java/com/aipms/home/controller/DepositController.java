@@ -35,15 +35,4 @@ public class DepositController {
 		return service.submitRD(rd);
 	}
 	
-	@GetMapping("/getFd/{userId}")
-	public List<FixedDeposit> getAllFDsOfUser(@PathVariable int userId)
-	{
-		return service.getAllFDsOfUser(userId);
-	}
-	
-	@GetMapping("/getRd/{userId}")
-	public List<RecurringDeposit> getAllRDsOfUser(@PathVariable int userId)
-	{
-		return service.getAllRDsOfUser(userId);
-	}
 }

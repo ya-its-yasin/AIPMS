@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.aipms.home.model.FixedDeposit;
 import com.aipms.home.model.RecurringDeposit;
+import com.aipms.home.model.UserProfile;
 
 @Service
 public interface DepositService {
@@ -14,9 +15,9 @@ public interface DepositService {
 
 	boolean submitRD(RecurringDeposit rd);
 
-	List<FixedDeposit> getAllFDsOfUser(int userId);
+	List<FixedDeposit> getAllFDsOfUser(UserProfile user);
 
-	List<RecurringDeposit> getAllRDsOfUser(int userId);
+	List<RecurringDeposit> getAllRDsOfUser(UserProfile user);
 
 	
 }

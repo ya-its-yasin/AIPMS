@@ -45,8 +45,8 @@ public class PortfolioServiceImpl implements PortfolioService{
 				"http://localhost:8090/user/profile/"+id, UserProfile.class);
 		UserProfile user = (UserProfile) response.getBody();
 		userPortfolio.setUser(user);
-		userPortfolio.setFixedDeposists(depositService.getAllFDsOfUser(id));
-		userPortfolio.setRecurringDeposits(depositService.getAllRDsOfUser(id));
+		userPortfolio.setFixedDeposists(depositService.getAllFDsOfUser(user));
+		userPortfolio.setRecurringDeposits(depositService.getAllRDsOfUser(user));
 		userPortfolio.setGolds(goldService.getAllProfiles(id));
 		userPortfolio.setFloatingRateBonds(bondService.getFrbList(id));
 		userPortfolio.setSovereignGoldBonds(bondService.getSgbList(id));

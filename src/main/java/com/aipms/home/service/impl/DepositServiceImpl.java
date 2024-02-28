@@ -48,15 +48,17 @@ public class DepositServiceImpl implements DepositService {
 	}
 
 	@Override
-	public List<FixedDeposit> getAllFDsOfUser(int userId) {
-		List<Integer> ids = List.of(userId);
-		return fdRepo.findAllById(ids);
+	public List<FixedDeposit> getAllFDsOfUser(UserProfile user) {
+		
+		//List<Integer> ids = List.of(userId);
+		//System.out.println(ids);
+		return fdRepo.findAllByFdHolder(user);
 	}
 
 	@Override
-	public List<RecurringDeposit> getAllRDsOfUser(int userId) {
-		List<Integer> ids = List.of(userId);
-		return rdRepo.findAllById(ids);
+	public List<RecurringDeposit> getAllRDsOfUser(UserProfile user) {
+		//List<Integer> ids = List.of(userId);
+		return rdRepo.findAllByRdHolder(user);
 	}
 
 }
