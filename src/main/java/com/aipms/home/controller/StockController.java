@@ -48,17 +48,28 @@ public class StockController {
 	@PostMapping("/purchasemutualfunds")
 	public String purchaseMutualFunds(@RequestBody List<PurchasedMutualFunds> purchasedMutualFunds) {
 		try {
+			List<Double> boughtAmounts=new ArrayList<>();
 			List<PurchasedMutualFunds> pmfList = new ArrayList<>();
+			double totalBoughtAmount=0;
+			List<Integer> userids = new ArrayList<>();
 			purchasedMutualFunds.stream().forEach(mf->{
 				mf.setActiveStatus("ACTIVE");
 				mf.setCurrentReturnAmount(mf.getBoughtAmount())	;
+				boughtAmounts.add(mf.getBoughtAmount());
+				userids.add(mf.getUserId());
 				pmfList.add(mf);
 			});
+			for(Double bAmount:boughtAmounts) {
+				totalBoughtAmount+=bAmount;
+			}
 			String message = pMFService.UpdatePurchasedMutualFundsData(pmfList);
 			if(message.toLowerCase().contains("not"))
 				return "Not Successful";
-			else
+			else {
+				userService.updateDebitWalletAmount(totalBoughtAmount, userids.get(0));
 				return "Purchase Successful";
+			}
+			
 		}
 		catch(Exception e) {
 			return "Not Successful";
@@ -97,16 +108,27 @@ public class StockController {
 	@PostMapping("/withdrawmutualfunds")
 	public String withdrawMutualFunds(@RequestBody List<PurchasedMutualFunds> purchasedMutualFunds) {
 		try {
+			List<Double> boughtAmounts=new ArrayList<>();
+			double totalBoughtAmount=0;
+			List<Integer> userids = new ArrayList<>();
 			List<PurchasedMutualFunds> pmfList = new ArrayList<>();
 			purchasedMutualFunds.stream().forEach(mf->{
 				mf.setActiveStatus("INACTIVE");
+				boughtAmounts.add(mf.getBoughtAmount());
+				userids.add(mf.getUserId());
+				pmfList.add(mf);
 				pmfList.add(mf);
 			});
+			for(Double bAmount:boughtAmounts) {
+				totalBoughtAmount+=bAmount;
+			}
 			String message = pMFService.UpdatePurchasedMutualFundsData(pmfList);
 			if(message.toLowerCase().contains("not"))
 				return "Not Successful";
-			else
+			else {
+				userService.updateCreditWalletAmount(totalBoughtAmount, userids.get(0));
 				return "Withdrawn Successful";
+			}
 		}
 		catch(Exception e) {
 			return "Not Successful";

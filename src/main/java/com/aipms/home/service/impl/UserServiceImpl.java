@@ -99,4 +99,16 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 	
+	@Override
+	public int updateDebitWalletAmount(double amount, int id) {
+		return repo.updateDebitWalletAmount(amount, id);
+		
+	}
+	
+	@Override
+	public int updateCreditWalletAmount(double amount, int id) {
+		return repo.updateCreditWalletAmount(amount, id);
+		
+	}
+	
 }
