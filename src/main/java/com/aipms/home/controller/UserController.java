@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aipms.home.model.UserProfile;
 import com.aipms.home.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:4200") //port number of angular application
+@CrossOrigin("http://localhost:4200/") //port number of angular application
 @RestController
 @RequestMapping("/user")
 public class UserController {
