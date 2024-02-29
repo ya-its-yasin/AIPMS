@@ -24,15 +24,15 @@ public class GoldInvestmentController {
 	@Autowired
 	GoldInvestmentService goldservice;
 
-	@GetMapping("/get/{gid}")
-	public Optional<GoldInvestment> getProfile(@PathVariable int gid){
-		return goldservice.getProfile(gid);
-	}
-
-	@GetMapping("/getall/{userId}")
-	public List<GoldInvestment> getAllProfiles(@PathVariable int userId){
-		return goldservice.getAllProfiles(userId);
-	}
+//	@GetMapping("/get/{gid}")
+//	public Optional<GoldInvestment> getProfile(@PathVariable int gid){
+//		return goldservice.getProfile(gid);
+//	}
+//
+//	@GetMapping("/getall/{userId}")
+//	public List<GoldInvestment> getAllProfiles(@PathVariable int userId){
+//		return goldservice.getAllProfiles(userId);
+//	}
 
 	@PostMapping("/buy")
 	public boolean buygold(@RequestBody GoldInvestment gold){

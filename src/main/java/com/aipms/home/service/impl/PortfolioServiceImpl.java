@@ -47,7 +47,7 @@ public class PortfolioServiceImpl implements PortfolioService{
 		userPortfolio.setUser(user);
 		userPortfolio.setFixedDeposists(depositService.getAllFDsOfUser(user));
 		userPortfolio.setRecurringDeposits(depositService.getAllRDsOfUser(user));
-		userPortfolio.setGolds(goldService.getAllProfiles(id));
+		userPortfolio.setGolds(goldService.getAllgoldsOfUser(user));
 		userPortfolio.setFloatingRateBonds(bondService.getFrbList(id));
 		userPortfolio.setSovereignGoldBonds(bondService.getSgbList(id));
 		userPortfolio.setMutualFunds(pmfService.getAllPurchasedModel(id));

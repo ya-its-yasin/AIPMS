@@ -39,9 +39,10 @@ public class GoldInvestmentServiceImpl implements GoldInvestmentService {
 	}
 
 	@Override
-	public List<GoldInvestment> getAllProfiles(int userId) {
-		List<Integer> ids = List.of(userId);
-		return goldrepo.findAllById(ids);
+	public List<GoldInvestment> getAllgoldsOfUser(UserProfile user) {
+//		List<Integer> ids = List.of(userId);
+//		return goldrepo.findAllById(ids);
+		return goldrepo.findAllBygoldHolder(user);
 	}
 	
 
