@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,11 +23,12 @@ public class GoldInvestment {
 	private double interest;
 	private int years;
 	private double amount;
-	//private double goldpurchased;
+	private double goldpurchased;
 	private double monthlyrate;
 	private double months;
 	private double profit;
 	
-	
-	private int UserId;
+	@ManyToOne
+	private UserProfile goldHolder;
+//	private int UserId;
 }
